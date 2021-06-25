@@ -1,0 +1,12 @@
+---
+#Installing java for RedHat Based OS 
+- name: Installing java
+  yum:
+     name: java-1.8.0-openjdk
+     state: present
+     update_cache: yes
+
+- name: To create JAVA Environment
+  shell: sudo echo -e "JAVA_HOME=/usr/lib/jvm/java-8-oracle '\n' JRE_HOME=/usr/lib/jvm/java-8-oracle-jre" >> /etc/environment
+
+...  

@@ -1,0 +1,27 @@
+---
+#Installation for Debian based OS
+- name: Install add-apt-repostory
+  apt:
+     name: software-properties-common 
+     state: latest
+
+- name: Adding Java repository
+  apt_repository:
+     repo: ppa:webupd8team/java
+ 
+- name: Updating Cache 
+  apt:
+     update_cache: yes
+ 
+- name: Installing java
+  apt: 
+     name: oracle-java8-installer
+     state: present
+
+- name: To create JAVA Environment
+  shell: sudo echo -e "JAVA_HOME=/usr/lib/jvm/java-8-oracle \n JRE_HOME=/usr/lib/jvm/java-8-oracle-jre" >> /etc/environment
+
+- name: To source java environment
+  shell: source /etc/environment  executable=/bin/bash
+...
+  

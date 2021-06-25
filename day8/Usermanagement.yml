@@ -1,0 +1,42 @@
+---
+- name: User Management
+  hosts: node2
+  remote_user: vagrant
+  become: true
+  tasks:
+  - name: Create a group Admin
+    group:
+     name: admin
+     state: present
+     system: yes
+
+  - name: Create 5 users
+    user:
+     name: "{{ item }}"
+     create_home: yes
+     shell: /bin/bash
+     group: admin
+     append: yes
+     state: present
+     generate_ssh_key: yes
+     ssh_key_bits: 2048
+     ssh_key_file: .ssh/id_rsa
+     password: 123
+
+
+    with_items:
+     - User1
+     - User2
+     - User3
+     - User4
+     - User5
+
+  - name: Create a new directory
+    file:
+     path: /home/vagrant/common_dir
+     state: directory
+     group: admin
+     owner: root
+     mode: 0755
+...
+

@@ -1,0 +1,52 @@
+---
+- name: Create a Logical Volume
+  hosts: node2
+  remote_user: vagrant
+  become: true
+  tasks:
+   - name: Installing lvm2 on node machine
+     apt:
+      name: lvm2
+      state: present
+
+   - name: Creating a physical volume
+     lvg:
+      vg: vol_lovedeep
+      pvs: /dev/sdb
+      state: present
+      pesize: 4
+
+   - name: Creating a logical volume
+     lvol:
+      vg: vol_lovedeep
+      lv: lv_lovedeep
+      size: 8m
+      pvs: /dev/sdb
+      active: true
+
+   - name: Resizing the logical volume
+     lvol:
+      vg: vol_lovedeep
+      lv: lv_lovedeep
+      size: 3
+      force: yes
+
+   - name: Giving ext4 to already created logical vol
+     filesystem:
+      fstype: ext4
+      dev: /dev/vol_lovedeep/lv_lovedeep
+
+   - name: Creating a mount point
+     file:
+      path: /mnt/lovedeepmnt
+      state: directory
+
+   - name: Mounting the newly created file system
+     mount:
+      path: /mnt/lovedeepmnt
+      src: /dev/vol_lovedeep/lv_lovedeep
+      fstab: /etc/fstab
+      fstype: ext4
+      state: present
+...
+

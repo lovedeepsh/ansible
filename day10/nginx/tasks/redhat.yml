@@ -1,0 +1,27 @@
+---
+#Installing nginx on RedHat
+- name: Install EPEL RELEASE
+  yum:
+    name: epel-release
+    state: present
+
+- name: Install nginx
+  yum: 
+    name: nginx
+    state: latest
+
+- name: Make sure Nginx start
+  service:
+    name: nginx
+    state: started
+
+- name: Creating www directory
+  file:
+    path: /var/www
+    state: directory
+
+- name: Creating html directory
+  file:
+    path: /var/www/html
+    state: directory
+...

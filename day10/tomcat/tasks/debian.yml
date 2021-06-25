@@ -1,0 +1,12 @@
+---
+#Installing tomcat in debian.yml
+- name: Install tomcat8
+  apt:
+    name: tomcat8
+    state: latest
+
+- name: Starting tomcat service
+  service: 
+    name: tomcat8.service
+    state: started 
+...

@@ -1,0 +1,11 @@
+---
+# tasks file for nginx
+- name: To include nginx on RedHat
+  include_tasks: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: To install nginx on Debian
+  include_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+...

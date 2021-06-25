@@ -1,0 +1,22 @@
+---
+#Installing nginx on Debian
+- name: Install nginx
+  apt: 
+    name: nginx
+    state: latest
+
+- name: Make sure Nginx start
+  service:
+    name: nginx
+    state: started
+
+- name: Indexing nginx 
+  copy: 
+    src: index.nginx-debian.html
+    dest: /var/www/html/index.nginx-debian.html
+
+- name: Make sure Nginx start
+  service:
+    name: nginx
+    state: restarted
+...
